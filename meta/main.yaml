@@ -1,0 +1,5 @@
+---
+galaxy_info:
+  author: Jeremiah Stuever
+dependencies:
+- role: jstuever.nvidia-drivers

@@ -1,0 +1,15 @@
+---
+- name: 'Add nvidia-container-runtime repo'
+  command: 'yum-config-manager --add-repo=https://nvidia.github.io/nvidia-container-runtime/centos7/x86_64/nvidia-container-runtime.repo'
+  args:
+    creates: '/etc/yum.repos.d/nvidia-container-runtime.repo'
+  register: nvidia_container_runtime
+
+- name: 'Install packages'
+  yum:
+    update_cache: "{{ nvidia_container_runtime is changed }}"
+    name:
+      - 'nvidia-container-runtime-hook'
+
+- name: 'Set selinux type container_file_t on /dev/nvidia*'
+  shell: 'chcon -t container_file_t /dev/nvidia*'
